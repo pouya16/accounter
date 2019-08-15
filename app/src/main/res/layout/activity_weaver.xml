@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/accounting"
+    tools:context="com.example.pouya.accounter.weaverActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="top"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
+
+                <EditText
+                    android:id="@+id/weaverEnterID"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="2"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:textColor="@android:color/background_dark" />
+
+                <TextView
+                    android:id="@+id/txtView5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="60dp"
+                    android:layout_weight="1.5"
+                    android:text="کد پرسنلی:"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/weaverEnterEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="2"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:textColor="@android:color/background_dark" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="30dp"
+                    android:layout_weight="1.5"
+                    android:text="نام بافنده : "
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@+id/weaverListView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp">
+
+
+            </ListView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="bottom|center_vertical|center_horizontal"
+                android:orientation="horizontal"
+                android:paddingTop="10dp">
+
+                <ImageButton
+                    android:id="@+id/deleteWeaver"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/magnitude_circle"
+                    android:backgroundTint="@color/magnitude5"
+                    app:srcCompat="@android:drawable/ic_menu_delete" />
+
+                <ImageButton
+                    android:id="@+id/addWeaverBtn"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:adjustViewBounds="false"
+                    android:background="@drawable/magnitude_circle"
+                    android:backgroundTint="@color/magnitude5"
+                    android:cropToPadding="false"
+                    android:scaleType="fitStart"
+                    app:srcCompat="@android:drawable/ic_menu_add" />
+
+                <ImageButton
+                    android:id="@+id/updateWeaverBtn"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:adjustViewBounds="false"
+                    android:background="@drawable/magnitude_circle"
+                    android:backgroundTint="@color/magnitude5"
+                    android:cropToPadding="false"
+                    android:scaleType="fitStart"
+                    app:srcCompat="@android:drawable/ic_menu_revert" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

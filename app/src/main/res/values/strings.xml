@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Accounter</string>
+    <string name="title_activity_shift_date">ShiftDateActivity</string>
+</resources>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#4b5ec7</color>
+    <color name="colorPrimaryDark">#303f9f</color>
+    <color name="colorAccent">#ff4081</color>    <color name="magnitude1">#e04a7ba7</color>
+
+    <!-- Magnitude circle color for an earthquake with magnitude between 2 and 3 -->
+    <color name="magnitude2">#04b4b3</color>
+
+    <!-- Magnitude circle color for an earthquake with magnitude between 3 and 4 -->
+    <color name="magnitude3">#ec9be3e2</color>
+
+    <!-- Magnitude circle color for an earthquake with magnitude between 4 and 5 -->
+    <color name="magnitude4">#f5a623</color>
+
+    <!-- Magnitude circle color for an earthquake with magnitude between 5 and 6 -->
+    <color name="magnitude5">#d4ff7d50</color>
+
+    <!-- Magnitude circle color for an earthquake with magnitude between 6 and 7 -->
+    <color name="magnitude6">#edfc6644</color>
+
+    <!-- Magnitude circle color for an earthquake with magnitude between 7 and 8 -->
+    <color name="magnitude7">#E75F40</color>
+
+    <!-- Magnitude circle color for an earthquake with magnitude between 8 and 9 -->
+    <color name="magnitude8">#e13a20</color>
+
+    <!-- Magnitude circle color for an earthquake with magnitude between 9 and 10 -->
+    <color name="magnitude9">#d0e9705d</color>
+
+    <!-- Magnitude circle color for an earthquake with magnitude over 10 -->
+    <color name="magnitude10plus">#c03823</color>
+
+    <!-- Text color for the details of the earthquake in the list item -->
+    <color name="textColorEarthquakeDetails">#ffffff</color>
+
+    <!-- Text color for the primary location of the earthquake in the list item -->
+    <color name="textColorEarthquakeLocation">#2B3D4D</color>
+</resources>
