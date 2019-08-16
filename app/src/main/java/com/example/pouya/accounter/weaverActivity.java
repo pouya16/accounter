@@ -1,8 +1,10 @@
 package com.example.pouya.accounter;
 
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +20,8 @@ public class weaverActivity extends AppCompatActivity {
 
     Machines machines = new Machines();
     final ArrayList<WeaverClass> weaverArray = new ArrayList<>();
+    String weaverID = "";
+    int key = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +76,7 @@ public class weaverActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 WeaverClass currentWeaver = adaptor.getItem(position);
                 veawerNameEditTxt.setText(currentWeaver.getWeaverName());
+                weaverID=currentWeaver.getWeaverPesonelID();
                 veawerIDEditTxt.setText(currentWeaver.getWeaverPesonelID());
             }
         });
@@ -102,22 +107,34 @@ public class weaverActivity extends AppCompatActivity {
                 if(!emptyFlag){
                     Toast.makeText(weaverActivity.this,"نام بافنده و کد کاربری را صحیح وارد کنید",Toast.LENGTH_SHORT).show();
                 }else {
-                    int key = -1;
+                    key = -1;
                     try {
-                        key = Integer.parseInt(veawerIDEditTxt.getText().toString());
+                        key = Integer.parseInt(weaverID);
                     } catch (Exception e) {
-
+                        Toast.makeText(weaverActivity.this,"کلید ساخته نشد",Toast.LENGTH_SHORT).show();
                     }
                     if (key != -1) {
-                        try {
-                            String deleteQuery = "DELETE FROM weavers WHERE weaverID=" + key;
-                            G.database.execSQL(deleteQuery);
-                            makeReset(veawerNameEditTxt,veawerIDEditTxt);
-                            Toast.makeText(weaverActivity.this, "بافنده با موفقیت حذف شد.", Toast.LENGTH_SHORT).show();
-                        } catch (Exception e) {
-                            Log.i("Log Delete: ", "ِ Delete Failed");
-                            Toast.makeText(weaverActivity.this, "حذف انجام نشد.", Toast.LENGTH_SHORT).show();
-                        }
+                        new AlertDialog.Builder(weaverActivity.this).setTitle("حذف").setMessage("آیا از حذف این بافنده مطمئن هستید؟")
+                                .setPositiveButton("یله", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        try {
+                                            String deleteQuery = "DELETE FROM weavers WHERE weaverID=" + key;
+                                            G.database.execSQL(deleteQuery);
+                                            makeReset(veawerNameEditTxt,veawerIDEditTxt);
+                                            Toast.makeText(weaverActivity.this, "بافنده با موفقیت حذف شد.", Toast.LENGTH_SHORT).show();
+                                        } catch (Exception e) {
+                                            Log.i("Log Delete: ", "ِ Delete Failed");
+                                            Toast.makeText(weaverActivity.this, "حذف انجام نشد.", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                }).setNegativeButton("خیر", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        }).create().show();
+
                     }
                 }
             }

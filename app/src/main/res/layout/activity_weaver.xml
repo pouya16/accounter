@@ -15,7 +15,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingLeft="50dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -23,49 +24,33 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:gravity="right"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp">
 
                 <EditText
-                    android:id="@+id/weaverEnterID"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="2"
-                    android:ems="10"
-                    android:inputType="number"
-                    android:textColor="@android:color/background_dark" />
-
-                <TextView
-                    android:id="@+id/txtView5"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="60dp"
-                    android:layout_weight="1.5"
-                    android:text="کد پرسنلی:"
-                    android:textColor="@android:color/background_dark"
-                    android:textSize="18sp" />
-
-                <EditText
                     android:id="@+id/weaverEnterEditText"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
                     android:layout_weight="2"
                     android:ems="10"
+                    android:hint="نام و نام خانوادگی بافنده"
                     android:inputType="textPersonName"
                     android:textColor="@android:color/background_dark" />
 
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="0dp"
+                <EditText
+                    android:id="@+id/weaverEnterID"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="30dp"
-                    android:layout_weight="1.5"
-                    android:text="نام بافنده : "
-                    android:textColor="@android:color/background_dark"
-                    android:textSize="18sp" />
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="2"
+                    android:ems="10"
+                    android:hint="کد پرسنلی"
+                    android:inputType="number"
+                    android:textColor="@android:color/background_dark" />
 
             </LinearLayout>
         </LinearLayout>
