@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class userNamesActivity extends AppCompatActivity {
     Machines machines = new Machines();
     final ArrayList<userNamesClass> userNamesArray = new ArrayList<>();
+    String deleteID ="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +75,7 @@ public class userNamesActivity extends AppCompatActivity {
                 userNamesClass selectedUser = adaptor.getItem(position);
                 userEditTxt.setText(selectedUser.getUserName());
                 passwordEditTxt.setText(selectedUser.getPassword());
+                deleteID = selectedUser.getId();
                 idEditTxt.setText(selectedUser.getId());
             }
         });
@@ -103,7 +105,11 @@ public class userNamesActivity extends AppCompatActivity {
             public void onClick(View v) {
                 int key = -1;
                 try {
-                   key = Integer.parseInt(idEditTxt.getText().toString());
+                    if(deleteID!=null) {
+                        key = Integer.parseInt(deleteID);
+                    }else{
+                        Toast.makeText(userNamesActivity.this,"یک یوزر را انتخاب کنید",Toast.LENGTH_SHORT).show();
+                    }
                 }catch (Exception e){
 
                 }
