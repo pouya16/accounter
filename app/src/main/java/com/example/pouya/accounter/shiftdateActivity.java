@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class shiftdateActivity extends AppCompatActivity {
@@ -23,9 +24,9 @@ public class shiftdateActivity extends AppCompatActivity {
         Spinner monthSpinner = (Spinner) findViewById(R.id.spinnerMonth);
         Spinner yearSpinner = (Spinner) findViewById(R.id.spinnerYear);
         Spinner salonSpinner = (Spinner) findViewById(R.id.spinnerSalonNumber);
-        final EditText txtDate = (EditText) findViewById(R.id.txtDate);
+        final TextView txtDate = (TextView) findViewById(R.id.txtDate);
         final EditText txtSalon = (EditText) findViewById(R.id.txtSalonNumber);
-        final EditText txtPersonId = (EditText) findViewById(R.id.txtPersonID);
+        final TextView txtPersonId = (TextView) findViewById(R.id.txtPersonID);
         Button btnNext = (Button) findViewById(R.id.btnNextPage);
 
         ArrayAdapter<String> shiftAdaptor = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, Constants.workingShifts);
