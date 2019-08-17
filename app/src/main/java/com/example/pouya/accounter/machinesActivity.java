@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class machinesActivity extends AppCompatActivity {
     Machines machines = new Machines();
     final ArrayList<machineClass> machinesArray = new ArrayList<>();
+    String deleteMachineNumber = "";
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +84,7 @@ public class machinesActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 machineClass currentmachine = adaptor.getItem(position);
                 machineEditTxt.setText(currentmachine.getMachineNumber());
+                deleteMachineNumber = currentmachine.getMachineNumber();
                 salonEditTxt.setText(currentmachine.getSalonNumber());
             }
         });
@@ -115,7 +117,11 @@ public class machinesActivity extends AppCompatActivity {
                 }else {
                     int key = -1;
                     try {
-                        key = Integer.parseInt(machineEditTxt.getText().toString());
+                        if(deleteMachineNumber!=null){
+                            key = Integer.parseInt(deleteMachineNumber);
+                        }else{
+                            Toast.makeText(machinesActivity.this,"یک ماشین را انتخاب کنید.",Toast.LENGTH_LONG).show();
+                        }
                     } catch (Exception e) {
 
                     }
