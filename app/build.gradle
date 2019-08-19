@@ -23,6 +23,7 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
+    compile 'com.android.support:design:26.1.0'
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'org.apache.poi:poi:3.9'
     compile 'org.apache.poi:poi-ooxml:3.9'

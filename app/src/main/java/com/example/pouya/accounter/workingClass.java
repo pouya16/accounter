@@ -13,8 +13,9 @@ public class workingClass {
     private String totalMeter;
     private String weaveType;
     private String extra;
+    private String weavedID;
 
-    public workingClass(String newMeterRead, String oldMeterRead, String machineNumberRead, String ringRead, String personIDRead, String endMeter, String weaveTypeRead, String extraRead) {
+    public workingClass(String newMeterRead, String oldMeterRead, String machineNumberRead, String ringRead, String personIDRead, String endMeter, String weaveTypeRead, String extraRead,String ID) {
         newMeter=newMeterRead;
         oldMeter = oldMeterRead;
         machineNumber = machineNumberRead;
@@ -23,6 +24,7 @@ public class workingClass {
         totalMeter = endMeter;
         weaveType = weaveTypeRead;
         extra = extraRead;
+        weavedID = ID;
     }
 
 
@@ -34,6 +36,7 @@ public class workingClass {
     public String getTotalMeter(){return totalMeter;}
     public String getWeaveType(){return weaveType;}
     public String getExtra(){return getExtra();}
+    public String getWeavedID() {return weavedID;}
 
     public String calculateTotalMeter(String oldMeter,String newMeter,String finalMeter){
         String meter;

@@ -1,6 +1,7 @@
 package com.example.pouya.accounter;
 
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -8,9 +9,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -33,6 +36,7 @@ import java.util.ArrayList;
 public class WorkingActivity extends AppCompatActivity {
     Machines machines = new Machines();
     final ArrayList<workingClass> workingArray = new ArrayList<workingClass>();
+    String weavedID = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +62,7 @@ public class WorkingActivity extends AppCompatActivity {
         String ring;
         String extra;
         String weaveType;
+        String ID;
 
 
         String query = "SELECT * FROM metrazh WHERE date='" + machines.date + "' AND shift='" + machines.shiftNumber + "' AND salonNumber='" + machines.salonNumber + "' ORDER BY machineNumber ";
@@ -71,6 +76,7 @@ public class WorkingActivity extends AppCompatActivity {
                 newMeter = "" + curWeavers.getInt(8);
                 oldMeter = "" + curWeavers.getInt(7);
                 MachineNumber = "" + curWeavers.getInt(5);
+                ID = "" + curWeavers.getString(2);
                 ring = "" + curWeavers.getInt(9);
                 extra = "" + curWeavers.getString(14);
                 weaveType = "" + curWeavers.getInt(14);
@@ -82,7 +88,7 @@ public class WorkingActivity extends AppCompatActivity {
                 curGetWeaver.close();
                 Log.i("Log2: ", "" + "Weaver Name: " + weaverName + " weavedMeter: " + weavedMeter + " newMeter: " + newMeter + " oldMeter: " + oldMeter);
                 //Log.i("Log3: ", "" + "date: " + key + " Salon: " + salon + " report: " + report);
-                workingClass workingclass = new workingClass(newMeter, oldMeter, MachineNumber, ring, weaverName, weavedMeter,weaveType,extra);
+                workingClass workingclass = new workingClass(newMeter, oldMeter, MachineNumber, ring, weaverName, weavedMeter,weaveType,extra,ID);
                 //Toast.makeText(reportActivity.this, "date: " + reportclass.getDate() + " Salon: " + reportclass.getShiftNumber(), Toast.LENGTH_SHORT).show();
                 Log.i("Log4: ", "" + "weaver name: " + workingclass.getPersonID() + " weaverPersonleID: " + workingclass.getTotalMeter());
                 workingArray.add(workingclass);
@@ -93,6 +99,33 @@ public class WorkingActivity extends AppCompatActivity {
         curWeavers.close();
         final workingAdaptor adaptor = new workingAdaptor(this, workingArray);
         workingListView.setAdapter(adaptor);
+        workingListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                workingClass currentWorker = adaptor.getItem(position);
+                weavedID = currentWorker.getWeavedID();
+                new AlertDialog.Builder(WorkingActivity.this).setTitle("حذف").setMessage("آیا از حذف این متراژ و مشخصات این ماشین مطمئن هستید؟")
+                        .setPositiveButton("یله", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                try {
+                                    String deleteQuery = "DELETE FROM metrazh WHERE key=" + weavedID;
+                                    G.database.execSQL(deleteQuery);
+                                    Toast.makeText(WorkingActivity.this, "دستگاه با موفقیت حذف شد.", Toast.LENGTH_SHORT).show();
+                                } catch (Exception e) {
+                                    Log.i("Log Delete: ", "ِ Delete Failed");
+                                    Toast.makeText(WorkingActivity.this, "حذف انجام نشد.", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }).setNegativeButton("خیر", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                }).create().show();
+
+            }
+        });
 
         btnAddReport.setOnClickListener(new View.OnClickListener() {
             @Override

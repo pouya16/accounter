@@ -327,6 +327,7 @@ public class testAcivity extends AppCompatActivity {
 
                 }catch(Exception e){
                             Toast.makeText(testAcivity.this, "اطلاعات ناقص است.", Toast.LENGTH_LONG).show();
+                            Log.i("Log","eshkal" + e.toString());
 
             }
 
@@ -629,13 +630,14 @@ public class testAcivity extends AppCompatActivity {
             while (curRead.moveToNext()) {
                 String newMeter = curRead.getString(8);
                 String oldMeter = curRead.getString(7);
+                String ID1 = curRead.getString(2);
                 String machineNumber = curRead.getString(5);
                 String ring = curRead.getString(9);
                 String personID = curRead.getString(12);
                 String endMeter = curRead.getString(6);
                 String weaveType = curRead.getString(11);
                 String extra = curRead.getString(14);
-                scrolledShift.add(new workingClass(newMeter, oldMeter, machineNumber, ring, personID,endMeter,weaveType,extra));
+                scrolledShift.add(new workingClass(newMeter, oldMeter, machineNumber, ring, personID,endMeter,weaveType,extra,ID1));
             }
             flag = true;
             curRead.close();
