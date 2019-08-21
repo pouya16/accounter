@@ -28,15 +28,19 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class WorkingActivity extends AppCompatActivity {
     Machines machines = new Machines();
     final ArrayList<workingClass> workingArray = new ArrayList<workingClass>();
     String weavedID = "";
+    String outputName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +53,9 @@ public class WorkingActivity extends AppCompatActivity {
         final G createClass = new G();
         try {
             createClass.createOrOpenDataBase(WorkingActivity.this);
-            Toast.makeText(WorkingActivity.this, "برنامه آماده است.", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(WorkingActivity.this, "برنامه آماده است.", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
-            Toast.makeText(WorkingActivity.this, "ابتدا پوشه ها را ایجاد کنید", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(WorkingActivity.this, "ابتدا پوشه ها را ایجاد کنید", Toast.LENGTH_SHORT).show();
         }
         String weaverName = "";
         int weaverID;
@@ -109,12 +113,12 @@ public class WorkingActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 try {
-                                    String deleteQuery = "DELETE FROM metrazh WHERE key=" + weavedID;
+                                    String deleteQuery = "DELETE FROM metrazh WHERE key = " + weavedID;
                                     G.database.execSQL(deleteQuery);
-                                    Toast.makeText(WorkingActivity.this, "دستگاه با موفقیت حذف شد.", Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(WorkingActivity.this, "دستگاه با موفقیت حذف شد.", Toast.LENGTH_SHORT).show();
                                 } catch (Exception e) {
                                     Log.i("Log Delete: ", "ِ Delete Failed");
-                                    Toast.makeText(WorkingActivity.this, "حذف انجام نشد.", Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(WorkingActivity.this, "حذف انجام نشد.", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }).setNegativeButton("خیر", new DialogInterface.OnClickListener() {
@@ -131,18 +135,18 @@ public class WorkingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (ReportUserEditTxt.getText().toString().length() < 1) {
-                    Toast.makeText(WorkingActivity.this, "لطفا گزارش را وارد کنید.", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(WorkingActivity.this, "لطفا گزارش را وارد کنید.", Toast.LENGTH_SHORT).show();
                 } else {
                     String query = "INSERT INTO 'privateReport'('messageKey','message') values ('" + (machines.date + "" + machines.shiftNumber) + "','" + ReportUserEditTxt.getText().toString() + "')";
                     G.database.execSQL(query);
-                    Toast.makeText(WorkingActivity.this, "با موفقیت اطلاعات وارد شد.", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(WorkingActivity.this, "با موفقیت اطلاعات وارد شد.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
         finalPrint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                File exportDir = new File(Environment.getExternalStorageDirectory() + "/output");
+                final File exportDir = new File(Environment.getExternalStorageDirectory() + "/output");
                 if (!exportDir.exists()) {
                     exportDir.mkdirs();
                 }
@@ -158,9 +162,9 @@ public class WorkingActivity extends AppCompatActivity {
                     }
                     csvWriter.close();
                     curCSV.close();
-                    Toast.makeText(WorkingActivity.this, "اطلاعات شیفت با موفقیت در حافظه ذخیره شد", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(WorkingActivity.this, "اطلاعات شیفت با موفقیت در حافظه ذخیره شد", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
-                    Toast.makeText(WorkingActivity.this, "اطلاعات شیفت پیدا نشد!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(WorkingActivity.this, "اطلاعات شیفت پیدا نشد!", Toast.LENGTH_SHORT).show();
                     Log.i("Log", e.getMessage().toString());
 
                 }
@@ -178,159 +182,194 @@ public class WorkingActivity extends AppCompatActivity {
                     }
                     csvWriter.close();
                     curCSV.close();
-                    Toast.makeText(WorkingActivity.this, "اطلاعات شیفت با موفقیت در حافظه ذخیره شد", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(WorkingActivity.this, "اطلاعات شیفت با موفقیت در حافظه ذخیره شد", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
-                    Toast.makeText(WorkingActivity.this, "اطلاعات شیفت پیدا نشد!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(WorkingActivity.this, "اطلاعات شیفت پیدا نشد!", Toast.LENGTH_SHORT).show();
                     Log.i("Log", e.getMessage().toString());
 
                 }
-                XSSFWorkbook workbook = new XSSFWorkbook();
-                XSSFSheet sheet = workbook.createSheet("polyramin");
-                Row row = sheet.createRow(0);
-                Cell cell = row.createCell(0);
-                cell.setCellValue(machines.personId);
-                cell = row.createCell(1);
-                cell.setCellValue("سرشیفت: ");
-                //cell = row.createCell(3);
-                String shift = "";
-                switch (machines.shiftNumber) {
-                    case 1:
-                        shift = "صبح";
-                        break;
-                    case 2:
-                        shift = "ظهر";
-                        break;
-                    case 3:
-                        shift = "شب";
-                        break;
-                    case 4:
-                        shift = "D";
-                        break;
-                    default:
-                        shift = "نامعلوم";
-                        break;
-                }
-                int printDate = machines.date;
-                int day = printDate%100;
-                printDate = printDate/100;
-                int month = printDate%100;
-                printDate = printDate/100;
-
-
-
-                cell = row.createCell(5);
-                cell.setCellValue(printDate);
-                cell = row.createCell(6);
-                cell.setCellValue(month);
-                cell = row.createCell(7);
-                cell.setCellValue(day);
-                cell = row.createCell(8);
-                cell.setCellValue("تاریخ: ");
-                row = sheet.createRow(1);
-                cell = row.createCell(7);
-                cell.setCellValue(shift);
-                cell = row.createCell(8);
-                cell.setCellValue("شیفت");
-                int rowCount = 2;
-                row = sheet.createRow(rowCount);
-
-                //edit Styles
-                //Header Font Def:
-                Font headerFont = sheet.getWorkbook().createFont();
-                //headerFont.setFontName("Arial");
-                headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
-
-                //Body Font Def
-                Font bodyFont = sheet.getWorkbook().createFont();
-                //bodyFont.setFontName("Arial");
-
-
-
-                //header Style
-                CellStyle header = sheet.getWorkbook().createCellStyle();
-                header.setFont(headerFont);
-                header.setBorderBottom(CellStyle.BORDER_MEDIUM);
-                header.setBorderLeft(CellStyle.BORDER_MEDIUM);
-                header.setBorderRight(CellStyle.BORDER_MEDIUM);
-                header.setBorderTop(CellStyle.BORDER_MEDIUM);
-
-
-                //body Style
-                CellStyle body = sheet.getWorkbook().createCellStyle();
-                body.setFont(bodyFont);
-                body.setBorderBottom(CellStyle.BORDER_THIN);
-                body.setBorderLeft(CellStyle.BORDER_THIN);
-                body.setBorderRight(CellStyle.BORDER_THIN);
-                body.setBorderTop(CellStyle.BORDER_THIN);
-
-                //write headers to excell
-                for(int i = 0; i<arrColumn.length;i++){
-                    cell = row.createCell(i);
-                    cell.setCellStyle(header);
-                    cell.setCellValue(arrColumn[i]);
-                }
-                //finish headers
-
-                //go to body
-                rowCount++;
-                String name = "";
-                int personelId = 0;
                 try {
-                    Cursor curCSV = G.database.rawQuery("SELECT * FROM metrazh WHERE date='" + machines.date + "' AND shift='" + machines.shiftNumber + "' AND salonNumber='" + machines.salonNumber + "'", null);
-                    while (curCSV.moveToNext()) {
-                        row = sheet.createRow(rowCount);
-                        personelId = curCSV.getInt(12);
-                        Cursor cursorName = G.database.rawQuery("SELECT * FROM weavers WHERE weaverID='"+personelId+"'",null);
-                        cursorName.moveToFirst();
-                        name = cursorName.getString(2);
-                        String arrStr[] = {curCSV.getString(14), "", curCSV.getString(11), curCSV.getString(9), name , curCSV.getString(6), curCSV.getString(8), curCSV.getString(7), curCSV.getString(5)};
-                        for(int i=0;i<2;i++){
-                            cell = row.createCell(i);
-                            cell.setCellStyle(body);
-                            cell.setCellValue("");
-                        }
-                        for(int i = 2; i<arrStr.length;i++){
-                            cell = row.createCell(i);
-                            cell.setCellStyle(body);
-                            cell.setCellValue(arrStr[i]);
-                        }
-                        cursorName.close();
-                        rowCount++;
+                    final XSSFWorkbook workbook = new XSSFWorkbook();
+                    XSSFSheet sheet = workbook.createSheet("polyramin");
+                    Row row = sheet.createRow(0);
+                    Cell cell = row.createCell(0);
+                    cell.setCellValue(machines.personId);
+                    cell = row.createCell(1);
+                    cell.setCellValue("سرشیفت: ");
+                    //cell = row.createCell(3);
+                    String shift = "";
+                    switch (machines.shiftNumber) {
+                        case 1:
+                            shift = "صبح";
+                            break;
+                        case 2:
+                            shift = "ظهر";
+                            break;
+                        case 3:
+                            shift = "شب";
+                            break;
+                        case 4:
+                            shift = "D";
+                            break;
+                        default:
+                            shift = "نامعلوم";
+                            break;
                     }
-                    curCSV.close();
-                } catch (Exception e) {
-                    Toast.makeText(WorkingActivity.this, "اطلاعات شیفت پیدا نشد!", Toast.LENGTH_SHORT).show();
-                    Log.i("Log", e.getMessage().toString());
-
-                }
-                rowCount += 2;
-                row = sheet.createRow(rowCount);
-                cell = row.createCell(7);
-                cell.setCellValue("امضا");
-                sheet.setColumnWidth(0,5000);
-                sheet.setColumnWidth(1,2000);
-                sheet.setColumnWidth(2,1500);
-                sheet.setColumnWidth(3,2500);
-                sheet.setColumnWidth(4,3000);
-                sheet.setColumnWidth(5,2000);
-                sheet.setColumnWidth(6,2000);
-                sheet.setColumnWidth(7,2000);
-                sheet.setColumnWidth(8,1500);
+                    int printDate = machines.date;
+                    int day = printDate % 100;
+                    printDate = printDate / 100;
+                    int month = printDate % 100;
+                    printDate = printDate / 100;
 
 
-                //write file to device memory
-                String outputName = "try" + machines.date + machines.shiftNumber + ".xlsx";
-                try {
-                    FileOutputStream outputStream = new FileOutputStream(Environment.getExternalStorageDirectory() + "/output/" + outputName);
-                    workbook.write(outputStream);
+                    cell = row.createCell(5);
+                    cell.setCellValue(printDate);
+                    cell = row.createCell(6);
+                    cell.setCellValue(month);
+                    cell = row.createCell(7);
+                    cell.setCellValue(day);
+                    cell = row.createCell(8);
+                    cell.setCellValue("تاریخ: ");
+                    row = sheet.createRow(1);
+                    cell = row.createCell(7);
+                    cell.setCellValue(shift);
+                    cell = row.createCell(8);
+                    cell.setCellValue("شیفت");
+                    int rowCount = 2;
+                    row = sheet.createRow(rowCount);
+
+                    //edit Styles
+                    //Header Font Def:
+                    Font headerFont = sheet.getWorkbook().createFont();
+                    //headerFont.setFontName("Arial");
+                    headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+
+                    //Body Font Def
+                    Font bodyFont = sheet.getWorkbook().createFont();
+                    //bodyFont.setFontName("Arial");
+
+
+                    //header Style
+                    CellStyle header = sheet.getWorkbook().createCellStyle();
+                    header.setFont(headerFont);
+                    header.setBorderBottom(CellStyle.BORDER_MEDIUM);
+                    header.setBorderLeft(CellStyle.BORDER_MEDIUM);
+                    header.setBorderRight(CellStyle.BORDER_MEDIUM);
+                    header.setBorderTop(CellStyle.BORDER_MEDIUM);
+
+
+                    //body Style
+                    CellStyle body = sheet.getWorkbook().createCellStyle();
+                    body.setFont(bodyFont);
+                    body.setBorderBottom(CellStyle.BORDER_THIN);
+                    body.setBorderLeft(CellStyle.BORDER_THIN);
+                    body.setBorderRight(CellStyle.BORDER_THIN);
+                    body.setBorderTop(CellStyle.BORDER_THIN);
+
+                    //write headers to excell
+                    for (int i = 0; i < arrColumn.length; i++) {
+                        cell = row.createCell(i);
+                        cell.setCellStyle(header);
+                        cell.setCellValue(arrColumn[i]);
+                    }
+                    //finish headers
+
+                    //go to body
+                    rowCount++;
+                    String name = "";
+                    int personelId = 0;
+                    try {
+                        Cursor curCSV = G.database.rawQuery("SELECT * FROM metrazh WHERE date='" + machines.date + "' AND shift='" + machines.shiftNumber + "' AND salonNumber='" + machines.salonNumber + "'", null);
+                        curCSV.moveToFirst();
+                        while (curCSV.moveToNext()) {
+                            row = sheet.createRow(rowCount);
+                            personelId = curCSV.getInt(12);
+                            Cursor cursorName = G.database.rawQuery("SELECT * FROM weavers WHERE weaverID='" + personelId + "'", null);
+                            cursorName.moveToFirst();
+                            Log.i("Log","paygah dade dovom" + cursorName.getString(2));
+                            Log.i("Log","paygah dade khande shod");
+                            String arrStr[] = {curCSV.getString(14), "", curCSV.getString(11), curCSV.getString(9), name, curCSV.getString(6), curCSV.getString(8), curCSV.getString(7), curCSV.getString(5)};
+                            for (int i = 0; i < 2; i++) {
+                                cell = row.createCell(i);
+                                cell.setCellStyle(body);
+                                cell.setCellValue("");
+
+                            }
+                            for (int i = 2; i < arrStr.length; i++) {
+                                cell = row.createCell(i);
+                                cell.setCellStyle(body);
+                                cell.setCellValue(arrStr[i]);
+                                Log.i("Log","dade neveshte shode dar jadval : " + arrStr[i]);
+                            }
+                            cursorName.close();
+                            rowCount++;
+                        }
+                        curCSV.close();
+                    } catch (Exception e) {
+                        //Toast.makeText(WorkingActivity.this, "اطلاعات شیفت پیدا نشد!", Toast.LENGTH_SHORT).show();
+                        Log.i("Log", e.getMessage().toString());
+
+                    }
+                    rowCount += 2;
+                    row = sheet.createRow(rowCount);
+                    cell = row.createCell(7);
+                    cell.setCellValue("امضا");
+                    sheet.setColumnWidth(0, 5000);
+                    sheet.setColumnWidth(1, 2000);
+                    sheet.setColumnWidth(2, 1500);
+                    sheet.setColumnWidth(3, 2500);
+                    sheet.setColumnWidth(4, 3000);
+                    sheet.setColumnWidth(5, 2000);
+                    sheet.setColumnWidth(6, 2000);
+                    sheet.setColumnWidth(7, 2000);
+                    sheet.setColumnWidth(8, 1500);
+
+
+                    //write file to device memory
+                    int random = new Random().nextInt(101);
+                    String randomString = String.valueOf(random);
+                    outputName = "try" + machines.date + machines.shiftNumber + randomString + ".xlsx";
+                    try {
+                        new AlertDialog.Builder(WorkingActivity.this).setTitle("اخطار").setMessage("آیا از گرفتن خروجی مطمئن هستید ؟ بعد از گرفتن خروجی امکان تغییر در داده ها وجود ندارد.")
+                                .setPositiveButton("بله", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        FileOutputStream outputStream = null;
+                                        try {
+                                            outputStream = new FileOutputStream(Environment.getExternalStorageDirectory() + "/output/" + outputName);
+                                        } catch (FileNotFoundException e) {
+                                            e.printStackTrace();
+                                            Log.i("Log",e.toString());
+                                        }
+                                        try {
+                                            workbook.write(outputStream);
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                            Log.i("Log",e.toString());
+                                        }
+                                        openFile(exportDir,outputName);
+                                    }
+                                }).setNegativeButton("خیر", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        }).create().show();
+
+                        //FileOutputStream outputStream = new FileOutputStream(Environment.getExternalStorageDirectory() + "/output/" + outputName);
+                        //workbook.write(outputStream);
+                    } catch (Exception e) {
+                        Log.i("Log", e.toString());
+
+                    }
                 }catch (Exception e){
-                    Log.i("Log",e.toString());
-
+                    Log.i("Error",e.toString());
                 }
 
 
                 // finalizing file for opening
-                openFile(exportDir,outputName);
+
+                //openFile(exportDir,outputName);
 
 
             }
@@ -357,7 +396,7 @@ public class WorkingActivity extends AppCompatActivity {
             startActivity(fileIntent);
 
         } catch (ActivityNotFoundException e) {
-            Toast.makeText(WorkingActivity.this, "Cant Find Your File", Toast.LENGTH_LONG).show();
+            //Toast.makeText(WorkingActivity.this, "Cant Find Your File", Toast.LENGTH_LONG).show();
             Log.i("Log", e.toString());
         }
     }
