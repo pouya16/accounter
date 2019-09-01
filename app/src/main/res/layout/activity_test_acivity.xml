@@ -127,32 +127,28 @@
                         android:id="@+id/checkBox"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
+                        android:layout_weight="1"
                         android:text="ماشین اشتراکی:"
                         android:textColor="@android:color/black"
                         android:textSize="14sp" />
 
-                    <EditText
-                        android:id="@+id/txtMachineNumber"
-                        android:layout_width="0dp"
+                    <android.support.design.widget.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="8dp"
                         android:layout_weight="1"
-                        android:ems="10"
-                        android:inputType="number"
-                        android:textColor="@android:color/black"
-                        android:textSize="24sp" />
+                        app:passwordToggleEnabled="true">
 
-                    <TextView
-                        android:id="@+id/textViewMachine"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_weight="1"
-                        android:text="شماره ماشین"
-                        android:textColor="@android:color/black"
-                        android:textSize="18sp" />
+                        <EditText
+                            android:id="@+id/txtMachineNumber"
+                            android:layout_width="280dp"
+                            android:layout_height="wrap_content"
+                            android:hint="شماره ماشین"
+                            android:inputType="number" />
+                    </android.support.design.widget.TextInputLayout>
 
                 </LinearLayout>
 
@@ -231,46 +227,41 @@
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/txtRing"
-                        android:layout_width="0dp"
+                    <android.support.design.widget.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginBottom="8dp"
                         android:layout_weight="1"
-                        android:ems="10"
-                        android:inputType="number"
-                        android:textColor="@android:color/black"
-                        android:textSize="24sp" />
+                        app:passwordToggleEnabled="true">
 
-                    <TextView
-                        android:id="@+id/textViewRingNo"
-                        android:layout_width="0dp"
+                        <EditText
+                            android:id="@+id/txtRing"
+                            android:layout_width="280dp"
+                            android:layout_height="wrap_content"
+                            android:hint="رینگ دستگاه"
+                            android:inputType="number" />
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="8dp"
                         android:layout_marginRight="10dp"
-                        android:layout_weight="1.4"
-                        android:text="رینگ دستگاه"
-                        android:textColor="@android:color/black"
-                        android:textSize="18sp" />
-
-                    <EditText
-                        android:id="@+id/txtNewMeter"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
                         android:layout_weight="1"
-                        android:ems="10"
-                        android:inputType="number"
-                        android:textColor="@android:color/black"
-                        android:textSize="24sp" />
+                        app:passwordToggleEnabled="true">
 
-                    <TextView
-                        android:id="@+id/textViewNewMeter"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_weight="1.4"
-                        android:text="متراژ جدید"
-                        android:textColor="@android:color/black"
-                        android:textSize="18sp" />
+                        <EditText
+                            android:id="@+id/txtNewMeter"
+                            android:layout_width="280dp"
+                            android:layout_height="wrap_content"
+                            android:hint="متراژ جدید"
+                            android:inputType="number" />
+                    </android.support.design.widget.TextInputLayout>
 
                 </LinearLayout>
 
@@ -283,119 +274,105 @@
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/txtZeroMeter"
-                        android:layout_width="0dp"
+                    <android.support.design.widget.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginBottom="8dp"
                         android:layout_weight="1"
-                        android:ems="10"
-                        android:inputType="number"
-                        android:textColor="@android:color/black"
-                        android:textSize="24sp" />
+                        app:passwordToggleEnabled="true">
 
-                    <TextView
-                        android:id="@+id/textViewOldMeter2"
-                        android:layout_width="0dp"
+                        <EditText
+                            android:id="@+id/txtZeroMeter"
+                            android:layout_width="280dp"
+                            android:layout_height="wrap_content"
+                            android:hint="متراژ صفر"
+                            android:inputType="number" />
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_weight="1.5"
-                        android:text="متراژ صفر"
-                        android:textColor="@android:color/black"
-                        android:textSize="18sp" />
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_weight="1"
+                        app:passwordToggleEnabled="true">
+
+                        <EditText
+                            android:id="@+id/txtOldMeter"
+                            android:layout_width="280dp"
+                            android:layout_height="wrap_content"
+                            android:hint="متراژ قدیم"
+                            android:inputType="number" />
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
 
                     <EditText
                         android:id="@+id/txtOldMeterAdmin"
-                        android:layout_width="0dp"
+                        android:layout_width="1dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:editable="false"
+                        android:ems="10"
+                        android:inputType="number"
+                        android:textColor="@android:color/black"
+                        android:textSize="24sp"
+                        android:visibility="invisible" />
+
+                    <android.support.design.widget.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
                         android:layout_marginRight="10dp"
-                        android:layout_weight="1"
-                        android:editable="false"
-                        android:ems="10"
-                        android:inputType="number"
-                        android:textColor="@android:color/black"
-                        android:textSize="24sp" />
+                        android:layout_marginBottom="8dp"
+                        app:passwordToggleEnabled="true">
 
-                    <EditText
-                        android:id="@+id/txtOldMeter"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:editable="false"
-                        android:ems="10"
-                        android:inputType="number"
-                        android:textColor="@android:color/black"
-                        android:textSize="24sp" />
-
-                    <TextView
-                        android:id="@+id/textViewOldMeter"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1.5"
-                        android:text="متراژ قدیم"
-                        android:textColor="@android:color/black"
-                        android:textSize="18sp" />
+                        <EditText
+                            android:id="@+id/txtWeaveType"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="نوع نخ"
+                            android:inputType="number" />
+                    </android.support.design.widget.TextInputLayout>
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="50dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/txtWeaveType"
-                        android:layout_width="0dp"
+                    <android.support.design.widget.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:ems="10"
-                        android:inputType="number"
-                        android:textColor="@android:color/black"
-                        android:textSize="24sp" />
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        app:passwordToggleEnabled="true">
 
-                    <TextView
-                        android:id="@+id/WeaveType"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_weight="1.4"
-                        android:text="نوع نخ"
-                        android:textColor="@android:color/black"
-                        android:textSize="18sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <EditText
-                        android:id="@+id/txtExtra"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_weight="3"
-                        android:ems="10"
-                        android:inputType="text|number"
-                        android:textColor="@android:color/black"
-                        android:textSize="24sp" />
-
-                    <TextView
-                        android:id="@+id/showExtra"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_weight="1"
-                        android:text="توضیحات"
-                        android:textColor="@android:color/black"
-                        android:textSize="18sp" />
+                        <EditText
+                            android:id="@+id/txtExtra"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="توضیحات"
+                            android:inputType="number" />
+                    </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
 
             </LinearLayout>
