@@ -13,6 +13,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,7 +47,7 @@ public class WorkingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_working);
-        ListView workingListView = (ListView) findViewById(R.id.workingListView);
+        final ListView workingListView = (ListView) findViewById(R.id.workingListView);
         ImageButton btnAddReport = (ImageButton) findViewById(R.id.btnAddReport);
         Button finalPrint = (Button) findViewById(R.id.btnFinalPrint);
         final EditText ReportUserEditTxt = (EditText) findViewById(R.id.txtUserReport);
@@ -80,7 +81,7 @@ public class WorkingActivity extends AppCompatActivity {
                 newMeter = "" + curWeavers.getInt(8);
                 oldMeter = "" + curWeavers.getInt(7);
                 MachineNumber = "" + curWeavers.getInt(5);
-                ID = "" + curWeavers.getString(2);
+                ID = "" + curWeavers.getString(1);
                 ring = "" + curWeavers.getInt(9);
                 extra = "" + curWeavers.getString(14);
                 weaveType = "" + curWeavers.getInt(14);
@@ -105,16 +106,21 @@ public class WorkingActivity extends AppCompatActivity {
         workingListView.setAdapter(adaptor);
         workingListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                workingClass currentWorker = adaptor.getItem(position);
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                final workingClass currentWorker = adaptor.getItem(position);
                 weavedID = currentWorker.getWeavedID();
+                Log.i("Log Delete: ", "ِ Deletion Preparation in processing. ID is: " + weavedID);
                 new AlertDialog.Builder(WorkingActivity.this).setTitle("حذف").setMessage("آیا از حذف این متراژ و مشخصات این ماشین مطمئن هستید؟")
                         .setPositiveButton("یله", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 try {
+                                    Log.i("Log Delete: ", "ِ Deletion Preparation in processing. ID is: " + weavedID);
                                     String deleteQuery = "DELETE FROM metrazh WHERE key = " + weavedID;
                                     G.database.execSQL(deleteQuery);
+                                    Log.i("Log Delete: ", "ِ Delete Done");
+                                    adaptor.remove(currentWorker);
+                                    adaptor.notifyDataSetChanged();
                                     //Toast.makeText(WorkingActivity.this, "دستگاه با موفقیت حذف شد.", Toast.LENGTH_SHORT).show();
                                 } catch (Exception e) {
                                     Log.i("Log Delete: ", "ِ Delete Failed");
@@ -374,6 +380,10 @@ public class WorkingActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    private void deleteCurrentMachine(String weavedID, int position, workingAdaptor adaptor) {
 
     }
 

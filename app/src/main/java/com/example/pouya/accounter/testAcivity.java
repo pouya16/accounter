@@ -225,8 +225,8 @@ public class testAcivity extends AppCompatActivity {
         txtDate.setText(""+machines.date);
 
 
-        //buttons conficuration
-        //buttons conficuration
+        //buttons configuration
+        //buttons configuration
         btnSQLMaker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -486,6 +486,7 @@ public class testAcivity extends AppCompatActivity {
         btnShiftRead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 try {
                     machines.isInserted = generateViewShift(scrolledShift);
                     if (machines.isInserted) {
@@ -509,6 +510,7 @@ public class testAcivity extends AppCompatActivity {
             }
         });
     }
+
 
 
     //EXTERNAL functions parts:
@@ -587,14 +589,16 @@ public class testAcivity extends AppCompatActivity {
 //        values.put("personID",personId);
 
 //        G.database.insert("metrazh",null,values);
-        String query = "UPDATE metrazh SET allMeter = '"+metrazh+"', newMeter = '" + newMeter+"', ring = '" + ring + "',eshteraki = '"+checked +"', userID = '"+userID +"' extra = '"+ extra + "' WHERE " +
+        if(extra.length()<1){
+            extra = "ویرایش شده";
+        }
+        String query = "UPDATE metrazh SET allMeter = '"+metrazh+"', newMeter = '" + newMeter+"', ring = '" + ring + "',eshteraki = '"+checked +"', userID = '"+userID +"', extra = '"+ extra + "' WHERE " +
                 "key = '"+ key + "'";
         Log.i("Log", G.database.toString());
         try {
             G.database.execSQL(query);
         }catch (Exception e){
-
-        Log.i("Log", " اصلاح موفقیت آمیز نبود.");
+            Log.i("Log", " اصلاح موفقیت آمیز نبود.");
         }
         Log.i("Log", " اطلاعات ماشین با موفقیت اصلاح شد");
         //Toast.makeText(testAcivity.this, "Successfully added to database", Toast.LENGTH_LONG).show();

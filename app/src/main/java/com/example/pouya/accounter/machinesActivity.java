@@ -18,6 +18,8 @@ public class machinesActivity extends AppCompatActivity {
     Machines machines = new Machines();
     final ArrayList<machineClass> machinesArray = new ArrayList<>();
     String deleteMachineNumber = "";
+    machinesAdaptor adaptor;
+    int adaptorPosition = -1;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +77,7 @@ public class machinesActivity extends AppCompatActivity {
         } catch (Exception e) {
             Log.i("Log: ", "Fatal error" + e.getMessage());
         }
-        final machinesAdaptor adaptor = new machinesAdaptor(this, machinesArray);
+        adaptor = new machinesAdaptor(this, machinesArray);
         machinesListView.setAdapter(adaptor);
 
         machinesListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
@@ -83,6 +85,7 @@ public class machinesActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 machineClass currentmachine = adaptor.getItem(position);
+                adaptorPosition = position;
                 machineEditTxt.setText(currentmachine.getMachineNumber());
                 deleteMachineNumber = currentmachine.getMachineNumber();
                 salonEditTxt.setText(currentmachine.getSalonNumber());
@@ -130,6 +133,9 @@ public class machinesActivity extends AppCompatActivity {
                             String deleteQuery = "DELETE FROM machines WHERE machineNumber=" + key;
                             G.database.execSQL(deleteQuery);
                             makeReset(machineEditTxt,salonEditTxt);
+                            machineClass currentMachine = adaptor.getItem(adaptorPosition);
+                            adaptor.remove(currentMachine);
+                            adaptor.notifyDataSetChanged();
                             Toast.makeText(machinesActivity.this, "ماشین با موفقیت حذف شد.", Toast.LENGTH_SHORT).show();
                         } catch (Exception e) {
                             Log.i("Log Delete: ", "ِ Delete Failed");
@@ -149,6 +155,9 @@ public class machinesActivity extends AppCompatActivity {
                     Toast.makeText(machinesActivity.this,"شماره ماشین و شماره سالن را صحیح وارد کنید",Toast.LENGTH_SHORT).show();
                 }else{
                     postMachine(G.database,machineEditTxt.getText().toString(),salonEditTxt.getText().toString());
+                    machineClass currentMachine = new machineClass(machineEditTxt.getText().toString(),salonEditTxt.getText().toString());
+                    adaptor.add(currentMachine);
+                    adaptor.notifyDataSetChanged();
                     Toast.makeText(machinesActivity.this,"ماشین با موفقیت وارد سیستم شد.",Toast.LENGTH_SHORT).show();
                     makeReset(machineEditTxt,salonEditTxt);
                 }

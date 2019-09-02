@@ -63,7 +63,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                         //12:
                         "'userID' INTEGER, " +
                         "'personID' INTEGER, " +
-                        "'Extra' TEXT" +
+                        "'extra' TEXT" +
                         ")";
 
         db.execSQL(query);

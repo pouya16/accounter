@@ -44,6 +44,7 @@ public class workingAdaptor extends ArrayAdapter<workingClass> {
         userID.setText(currentShift.getPersonID());
         TextView totalMeter = (TextView) listItemView.findViewById(R.id.metrazh);
         totalMeter.setText(currentShift.getTotalMeter());
+        notifyDataSetChanged();
 
 
 

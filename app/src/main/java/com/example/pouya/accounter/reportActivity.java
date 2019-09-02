@@ -50,16 +50,20 @@ public class reportActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 String deleteDate = selectedReport.getDate();
                                 String deleteSalon = selectedReport.getShiftNumber();
+                                Log.i("Log","begining of deletion. delete date is: " + deleteDate + " salon: " + deleteSalon);
                                 try {
                                     String deleteKey = deleteDate + deleteSalon;
                                     String deleteReportQuery = "DELETE FROM privateReport WHERE messageKey=" + Integer.parseInt(deleteKey);
                                     G.database.execSQL(deleteReportQuery);
                                     Toast.makeText(reportActivity.this, "گزارش به درستی پاک شد", Toast.LENGTH_SHORT).show();
+                                    adaptor.remove(selectedReport);
                                     adaptor.notifyDataSetChanged();
+                                    Log.i("Log","حذف با موفقیت انجام شد.");
                                     reportListView.setAdapter(adaptor);
 
                                 }catch (Exception e){
                                     Toast.makeText(reportActivity.this, "عدم موفقیت در حذف گزارش", Toast.LENGTH_SHORT).show();
+                                    Log.i("Log","not deleted: "+e.toString());
                                 }
                             }
                         }).setNegativeButton("خیر", new DialogInterface.OnClickListener() {

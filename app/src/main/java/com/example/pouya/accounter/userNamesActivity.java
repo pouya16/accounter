@@ -18,6 +18,8 @@ public class userNamesActivity extends AppCompatActivity {
     Machines machines = new Machines();
     final ArrayList<userNamesClass> userNamesArray = new ArrayList<>();
     String deleteID ="";
+    userNamesAdaptor adaptor;
+    int adaptorPosition = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +66,7 @@ public class userNamesActivity extends AppCompatActivity {
         } catch (Exception e) {
             Log.i("Log: ", "Fatal error" + e.getMessage());
         }
-        final userNamesAdaptor adaptor = new userNamesAdaptor(this, userNamesArray);
+        adaptor = new userNamesAdaptor(this, userNamesArray);
         userNamesListView.setAdapter(adaptor);
 
 
@@ -74,6 +76,7 @@ public class userNamesActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 userNamesClass selectedUser = adaptor.getItem(position);
                 userEditTxt.setText(selectedUser.getUserName());
+                adaptorPosition = position;
                 passwordEditTxt.setText(selectedUser.getPassword());
                 deleteID = selectedUser.getId();
                 idEditTxt.setText(selectedUser.getId());
@@ -118,6 +121,12 @@ public class userNamesActivity extends AppCompatActivity {
                         String deleteQuery = "DELETE FROM users WHERE userId=" + key;
                         G.database.execSQL(deleteQuery);
                         makeReset(userEditTxt,passwordEditTxt,idEditTxt);
+                        if(adaptorPosition!=-1){
+                            userNamesClass currentUserName = adaptor.getItem(adaptorPosition);
+                            adaptor.remove(currentUserName);
+                            adaptor.notifyDataSetChanged();
+                        }
+                        adaptorPosition = -1;
                         Toast.makeText(userNamesActivity.this,"کاربر با موفقیت حذف شد.",Toast.LENGTH_SHORT).show();
                     }catch (Exception e){
                         Log.i("Log Delete: ", "ِ Delete Failed");
@@ -137,6 +146,9 @@ public class userNamesActivity extends AppCompatActivity {
                 }else{
                     postUser(G.database,idEditTxt.getText().toString(),userEditTxt.getText().toString(),passwordEditTxt.getText().toString());
                     Toast.makeText(userNamesActivity.this,"نام کاربری با موفقیت وارد سیستم شد.",Toast.LENGTH_SHORT).show();
+                    userNamesClass currentUserName = new userNamesClass(userEditTxt.getText().toString(),passwordEditTxt.getText().toString(),idEditTxt.getText().toString());
+                    adaptor.add(currentUserName);
+                    adaptor.notifyDataSetChanged();
                     makeReset(userEditTxt,passwordEditTxt,idEditTxt);
                 }
             }

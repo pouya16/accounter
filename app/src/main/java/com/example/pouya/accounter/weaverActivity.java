@@ -22,6 +22,8 @@ public class weaverActivity extends AppCompatActivity {
     final ArrayList<WeaverClass> weaverArray = new ArrayList<>();
     String weaverID = "";
     int key = -1;
+    WeaverAdaptor adaptor;
+    int adaptorPosition = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +69,7 @@ public class weaverActivity extends AppCompatActivity {
         } catch (Exception e) {
             Log.i("Log: ", "Fatal error" + e.getMessage());
         }
-        final WeaverAdaptor adaptor = new WeaverAdaptor(this, weaverArray);
+        adaptor = new WeaverAdaptor(this, weaverArray);
         veawerListView.setAdapter(adaptor);
 
         veawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
@@ -75,6 +77,7 @@ public class weaverActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 WeaverClass currentWeaver = adaptor.getItem(position);
+                adaptorPosition = position;
                 veawerNameEditTxt.setText(currentWeaver.getWeaverName());
                 weaverID=currentWeaver.getWeaverPesonelID();
                 veawerIDEditTxt.setText(currentWeaver.getWeaverPesonelID());
@@ -122,6 +125,14 @@ public class weaverActivity extends AppCompatActivity {
                                             String deleteQuery = "DELETE FROM weavers WHERE weaverID=" + key;
                                             G.database.execSQL(deleteQuery);
                                             makeReset(veawerNameEditTxt,veawerIDEditTxt);
+                                            if(adaptorPosition!=-1){
+                                                WeaverClass currentWeaver = adaptor.getItem(adaptorPosition);
+                                                adaptor.remove(currentWeaver);
+                                                adaptor.notifyDataSetChanged();
+                                            }else{
+
+                                            }
+                                            adaptorPosition = -1;
                                             Toast.makeText(weaverActivity.this, "بافنده با موفقیت حذف شد.", Toast.LENGTH_SHORT).show();
                                         } catch (Exception e) {
                                             Log.i("Log Delete: ", "ِ Delete Failed");
@@ -149,6 +160,9 @@ public class weaverActivity extends AppCompatActivity {
                     Toast.makeText(weaverActivity.this,"نام بافنده و کد پرسنلی را صحیح وارد کنید",Toast.LENGTH_SHORT).show();
                 }else{
                     postWever(G.database,veawerIDEditTxt.getText().toString(),veawerNameEditTxt.getText().toString());
+                    WeaverClass currentWeaver = new WeaverClass(veawerNameEditTxt.getText().toString(),veawerIDEditTxt.getText().toString());
+                    adaptor.add(currentWeaver);
+                    adaptor.notifyDataSetChanged();
                     Toast.makeText(weaverActivity.this,"بافنده با موفقیت وارد سیستم شد.",Toast.LENGTH_SHORT).show();
                     makeReset(veawerNameEditTxt,veawerIDEditTxt);
                 }
