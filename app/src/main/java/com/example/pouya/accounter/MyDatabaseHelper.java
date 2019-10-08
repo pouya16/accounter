@@ -63,7 +63,10 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                         //12:
                         "'userID' INTEGER, " +
                         "'personID' INTEGER, " +
-                        "'extra' TEXT" +
+                        "'extra' TEXT, " +
+                        "'extramachine1' INTEGER, " +
+                        "'extramachine2' INTEGER, " +
+                        "'incridblemachine' INTEGER " +
                         ")";
 
         db.execSQL(query);

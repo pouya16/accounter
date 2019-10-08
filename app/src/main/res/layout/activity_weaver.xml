@@ -40,6 +40,7 @@
                     android:inputType="textPersonName"
                     android:textColor="@android:color/background_dark" />
 
+
                 <EditText
                     android:id="@+id/weaverEnterID"
                     android:layout_width="match_parent"

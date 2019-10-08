@@ -154,6 +154,10 @@ public class testAcivity extends AppCompatActivity {
         Spinner personSpinner = (Spinner) findViewById(R.id.prsnlNameSpinner);
         final G createClass = new G();
         final CheckBox checkBox = (CheckBox) findViewById(R.id.checkBox);
+        final CheckBox extraMachine1Checkbox = (CheckBox) findViewById(R.id.extraMachine1CheckBox);
+        final CheckBox extraMachine2Checkbox = (CheckBox) findViewById(R.id.extraMachine2CheckBox);
+        final CheckBox incredibleMachineCheckbox = (CheckBox) findViewById(R.id.incridbleExtraCheckBox);
+
         final ArrayList<workingClass> scrolledShift = new ArrayList<workingClass>();
 
         //defaults
@@ -268,6 +272,25 @@ public class testAcivity extends AppCompatActivity {
                         if (isEmpty) {
                             if (isMachineExist) {
                                 int checked = 0;
+                                int extra1Checked = 0;
+                                int extra2Checked = 0;
+                                int incridbleChecked = 0;
+
+                                if (extraMachine1Checkbox.isChecked()) {
+                                    extra1Checked = 1;
+                                } else {
+                                    extra1Checked = 0;
+                                }
+                                if (extraMachine2Checkbox.isChecked()) {
+                                    extra2Checked = 1;
+                                } else {
+                                    extra2Checked = 0;
+                                }
+                                if (incredibleMachineCheckbox.isChecked()) {
+                                    incridbleChecked = 1;
+                                } else {
+                                    incridbleChecked = 0;
+                                }
                                 if (checkBox.isChecked()) {
                                     checked = 1;
                                 } else {
@@ -285,14 +308,17 @@ public class testAcivity extends AppCompatActivity {
                                 }
                                 machines.metrazh = calculateMetrazh(machines.oldMeter, machines.newMeter, machines.zeroMeter);
                                 final int finalChecked = checked;
-                                new AlertDialog.Builder(testAcivity.this).setTitle("تایید متراژ").setMessage("آیا متراژ بافت زیر مورد تایید است؟ " + "\n" + machines.metrazh)
+                                final int finalExtra1Checked = extra1Checked;
+                                final int finalExtra2Checked = extra2Checked;
+                                final int finalIncridbleChecked = incridbleChecked;
+                                new AlertDialog.Builder(testAcivity.this).setTitle("تایید متراژ").setMessage("آیا متراژ بافت زیر مورد تایید است؟ " + "\n" + machines.metrazh + "\n" + "و آیا متراژ قدیم زیر مورد تایید است؟" + "\n" + machines.oldMeter)
                                         .setPositiveButton("بله", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 if (txtZeroMeter.toString().equals("")) {
-                                                    insertToMachines(machines.date, machines.shiftNumber, machines.salonNumber, machines.machineNumber, machines.oldMeter, machines.newMeter, machines.metrazh, machines.ring, finalChecked, machines.personId, machines.key, machines.userID, machines.weaveType,machines.extra);
+                                                    insertToMachines(machines.date, machines.shiftNumber, machines.salonNumber, machines.machineNumber, machines.oldMeter, machines.newMeter, machines.metrazh, machines.ring, finalChecked, machines.personId, machines.key, machines.userID, machines.weaveType,machines.extra, finalExtra1Checked, finalExtra2Checked, finalIncridbleChecked);
                                                 } else {
-                                                    insertToMachines(machines.date, machines.shiftNumber, machines.salonNumber, machines.machineNumber, machines.oldMeter, machines.newMeter, machines.metrazh, machines.ring, finalChecked, machines.personId, machines.key, machines.userID, machines.weaveType,machines.extra);
+                                                    insertToMachines(machines.date, machines.shiftNumber, machines.salonNumber, machines.machineNumber, machines.oldMeter, machines.newMeter, machines.metrazh, machines.ring, finalChecked, machines.personId, machines.key, machines.userID, machines.weaveType,machines.extra, finalExtra1Checked, finalExtra2Checked, finalIncridbleChecked);
                                                 }
                                                 Log.i("Log", "Our Job is successfully ended");
                                                 if (getAutoID(machines.key) != -1) {
@@ -306,6 +332,22 @@ public class testAcivity extends AppCompatActivity {
                                                 txtWeaveType.setText("");
                                                 txtRing.setText("");
                                                 txtExtra.setText("");
+                                                if(checkBox.isChecked()){
+                                                    checkBox.setChecked(false);
+                                                    checkBox.setSelected(false);
+                                                }
+                                                if(extraMachine1Checkbox.isChecked()){
+                                                    extraMachine1Checkbox.setChecked(false);
+                                                    extraMachine1Checkbox.setSelected(false);
+                                                }
+                                                if(extraMachine2Checkbox.isChecked()){
+                                                    extraMachine2Checkbox.setChecked(false);
+                                                    extraMachine2Checkbox.setSelected(false);
+                                                }
+                                                if(incredibleMachineCheckbox.isChecked()){
+                                                    incredibleMachineCheckbox.setChecked(false);
+                                                    incredibleMachineCheckbox.setSelected(false);
+                                                }
                                                 machines.autoID = 0;
                                                 machines.isChanging = false;
                                                 machines.isInserted = true;
@@ -469,6 +511,22 @@ public class testAcivity extends AppCompatActivity {
                 txtExtra.setText("");
                 machines.isInserted = false;
                 machines.isChanging = false;
+                if(checkBox.isChecked()){
+                    checkBox.setChecked(false);
+                    checkBox.setSelected(false);
+                }
+                if(extraMachine1Checkbox.isChecked()){
+                    extraMachine1Checkbox.setChecked(false);
+                    extraMachine1Checkbox.setSelected(false);
+                }
+                if(extraMachine2Checkbox.isChecked()){
+                    extraMachine2Checkbox.setChecked(false);
+                    extraMachine2Checkbox.setSelected(false);
+                }
+                if(incredibleMachineCheckbox.isChecked()){
+                    incredibleMachineCheckbox.setChecked(false);
+                    incredibleMachineCheckbox.setSelected(false);
+                }
             }
         });
 
@@ -492,7 +550,7 @@ public class testAcivity extends AppCompatActivity {
                     if (machines.isInserted) {
                         txtMachineNumber.setText(scrolledShift.get(0).getMachineNumber());
                         txtNewMeter.setText(scrolledShift.get(0).getNewMeter());
-                        txtOldMeter.setText(scrolledShift.get(0).getOldMeter());
+                        txtOldMeterAdmin.setText(scrolledShift.get(0).getOldMeter());
                         txtUserID.setText(scrolledShift.get(0).getPersonID());
                         txtRing.setText(scrolledShift.get(0).getRing());
                         txtWeaveType.setText(scrolledShift.get(0).getWeaveType());
@@ -549,7 +607,7 @@ public class testAcivity extends AppCompatActivity {
         }
     }
 
-    public void insertToMachines(int date, int shiftNumber, int salonNumber, int machineNumber, int oldMeter, int newMeter, int metrazh, int ring, int checked, int personId, String key,int userID, int weaveType,String extra) {
+    public void insertToMachines(int date, int shiftNumber, int salonNumber, int machineNumber, int oldMeter, int newMeter, int metrazh, int ring, int checked, int personId, String key,int userID, int weaveType,String extra,int extraMachine1,int extraMachine2,int incridbleMachine) {
         //String query  = "INSERT INTO 'metrazh'('key','date','shift','salonNumber','machineNumber','allMeter','newMeter','ring','personID') values"+
         //       "('"+key+"', '"+date+"', '"+shiftNumber+"', '"+salonNumber+"', '"+machineNumber+"', '"+metrazh+"', '"+newMeter+"', "+
         //      ring+"', '"+personId+"')";
@@ -563,9 +621,9 @@ public class testAcivity extends AppCompatActivity {
 //        values.put("personID",personId);
 
 //        G.database.insert("metrazh",null,values);
-        String query = "INSERT INTO 'metrazh'('key','date','shift','salonNumber','machineNumber','allMeter','oldMeter','newMeter','ring','eshteraki','weaveType','userID','personID','extra') values " +
+        String query = "INSERT INTO 'metrazh'('key','date','shift','salonNumber','machineNumber','allMeter','oldMeter','newMeter','ring','eshteraki','weaveType','userID','personID','extra','extramachine1','extramachine2','incridblemachine') values " +
                 "('" + key + "', '" + date + "', '" + shiftNumber + "', '" + salonNumber + "', '" + machineNumber + "', '" + metrazh + "', '" + oldMeter + "', '" + newMeter + "', '" + ring + "', '" +
-                checked + "', '" + weaveType + "', '" + userID + "', '" + personId +  "', '" + extra + "')";
+                checked + "', '" + weaveType + "', '" + userID + "', '" + personId +  "', '" + extra + "','"+ extraMachine1 +"','"+extraMachine2+"','"+incridbleMachine+"')";
         Log.i("Log", G.database.toString());
         try {
             G.database.execSQL(query);

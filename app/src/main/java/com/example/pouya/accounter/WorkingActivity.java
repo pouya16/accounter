@@ -13,13 +13,12 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -42,6 +41,8 @@ public class WorkingActivity extends AppCompatActivity {
     final ArrayList<workingClass> workingArray = new ArrayList<workingClass>();
     String weavedID = "";
     String outputName = "";
+    int totalshiftmeter = 0;
+    TextView totalShiftMeterTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,7 @@ public class WorkingActivity extends AppCompatActivity {
         final ListView workingListView = (ListView) findViewById(R.id.workingListView);
         ImageButton btnAddReport = (ImageButton) findViewById(R.id.btnAddReport);
         Button finalPrint = (Button) findViewById(R.id.btnFinalPrint);
+        totalShiftMeterTextView = (TextView) findViewById(R.id.totalShiftMeter);
         final EditText ReportUserEditTxt = (EditText) findViewById(R.id.txtUserReport);
         final G createClass = new G();
         try {
@@ -75,9 +77,12 @@ public class WorkingActivity extends AppCompatActivity {
         Cursor curWeavers = G.database.rawQuery(query, null);
         while (curWeavers.moveToNext()) {
             try {
+                int meter = 0;
                 Log.i("Log1: ", "WeaverName: " + curWeavers.getInt(2) + " weaverID: " + curWeavers.getString(1));
                 weaverID = curWeavers.getInt(12);
-                weavedMeter = "" + curWeavers.getInt(6);
+                meter = curWeavers.getInt(6);
+                weavedMeter = "" + meter;
+                totalshiftmeter = totalshiftmeter + meter;
                 newMeter = "" + curWeavers.getInt(8);
                 oldMeter = "" + curWeavers.getInt(7);
                 MachineNumber = "" + curWeavers.getInt(5);
@@ -102,6 +107,7 @@ public class WorkingActivity extends AppCompatActivity {
             }
         }
         curWeavers.close();
+        totalShiftMeterTextView.setText("" + totalshiftmeter);
         final workingAdaptor adaptor = new workingAdaptor(this, workingArray);
         workingListView.setAdapter(adaptor);
         workingListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -109,6 +115,7 @@ public class WorkingActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 final workingClass currentWorker = adaptor.getItem(position);
                 weavedID = currentWorker.getWeavedID();
+                final int meter = Integer.parseInt(currentWorker.getTotalMeter());
                 Log.i("Log Delete: ", "ِ Deletion Preparation in processing. ID is: " + weavedID);
                 new AlertDialog.Builder(WorkingActivity.this).setTitle("حذف").setMessage("آیا از حذف این متراژ و مشخصات این ماشین مطمئن هستید؟")
                         .setPositiveButton("یله", new DialogInterface.OnClickListener() {
@@ -121,6 +128,8 @@ public class WorkingActivity extends AppCompatActivity {
                                     Log.i("Log Delete: ", "ِ Delete Done");
                                     adaptor.remove(currentWorker);
                                     adaptor.notifyDataSetChanged();
+                                    totalshiftmeter = totalshiftmeter - meter;
+                                    totalShiftMeterTextView.setText("" + totalshiftmeter);
                                     //Toast.makeText(WorkingActivity.this, "دستگاه با موفقیت حذف شد.", Toast.LENGTH_SHORT).show();
                                 } catch (Exception e) {
                                     Log.i("Log Delete: ", "ِ Delete Failed");
@@ -163,7 +172,7 @@ public class WorkingActivity extends AppCompatActivity {
                     Cursor curCSV = G.database.rawQuery("SELECT * FROM metrazh WHERE date='" + machines.date + "' AND shift='" + machines.shiftNumber + "' AND salonNumber='" + machines.salonNumber + "'", null);
                     csvWriter.writeNext(curCSV.getColumnNames());
                     while (curCSV.moveToNext()) {
-                        String arrStr[] = {curCSV.getString(0) + "," + curCSV.getString(1) + "," + curCSV.getString(2) + "," + curCSV.getString(3) + "," + curCSV.getString(4) + "," + curCSV.getString(5) + "," + curCSV.getString(6) + "," + curCSV.getString(7) + "," + curCSV.getString(8) + "," + curCSV.getString(9) + "," + curCSV.getString(10) + "," + curCSV.getString(11)+ "," + curCSV.getString(12) + "\n"};
+                        String arrStr[] = {curCSV.getString(0) + "," + curCSV.getString(1) + "," + curCSV.getString(2) + "," + curCSV.getString(3) + "," + curCSV.getString(4) + "," + curCSV.getString(5) + "," + curCSV.getString(6) + "," + curCSV.getString(7) + "," + curCSV.getString(8) + "," + curCSV.getString(9) + "," + curCSV.getString(10) + "," + curCSV.getString(11)+ "," + curCSV.getString(12) +"," + curCSV.getString(13) + "," + curCSV.getString(14) +"," + curCSV.getString(15) +"\n"};
                         csvWriter.writeNext(arrStr);
                     }
                     csvWriter.close();

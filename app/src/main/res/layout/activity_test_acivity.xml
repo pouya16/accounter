@@ -115,6 +115,44 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/incridbleExtraCheckBox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
+                        android:text="اضافه استثنایی"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp" />
+
+                    <CheckBox
+                        android:id="@+id/extraMachine2CheckBox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
+                        android:text="اضافه دستگاه 2"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp" />
+
+                    <CheckBox
+                        android:id="@+id/extraMachine1CheckBox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
+                        android:text="اضافه دستگاه 1"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginLeft="50dp"
                     android:layout_weight="1"
@@ -307,11 +345,11 @@
                         app:passwordToggleEnabled="true">
 
                         <EditText
-                            android:id="@+id/txtOldMeter"
+                            android:id="@+id/txtOldMeterAdmin"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="متراژ قدیم"
-                            android:inputType="none"
+                            android:inputType="number"
                             android:textSize="14sp" />
                     </android.support.design.widget.TextInputLayout>
 
@@ -326,7 +364,8 @@
                     android:orientation="horizontal">
 
                     <EditText
-                        android:id="@+id/txtOldMeterAdmin"
+
+                        android:id="@+id/txtOldMeter"
                         android:layout_width="1dp"
                         android:layout_height="wrap_content"
                         android:editable="false"

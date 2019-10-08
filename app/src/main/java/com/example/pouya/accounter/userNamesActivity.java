@@ -131,6 +131,7 @@ public class userNamesActivity extends AppCompatActivity {
                     }catch (Exception e){
                         Log.i("Log Delete: ", "ِ Delete Failed");
                         Toast.makeText(userNamesActivity.this,"حذف انجام نشد.",Toast.LENGTH_SHORT).show();
+
                     }
                 }
             }
